@@ -1,5 +1,15 @@
+import Components.PsychoComponent
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
+import com.almasb.fxgl.dsl.FXGL
+import com.almasb.fxgl.dsl.FXGL.Companion.getWorldProperties
+import com.almasb.fxgl.dsl.getGameWorld
+import com.almasb.fxgl.dsl.getInput
+import com.almasb.fxgl.dsl.spawn
+import com.almasb.fxgl.entity.Entity
+import com.almasb.fxgl.input.UserAction
+import javafx.scene.input.KeyCode
+import javafx.scene.text.Text
 import com.almasb.fxgl.dsl.*
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.components.CollidableComponent
@@ -21,6 +31,7 @@ class PsychoGameApp() : GameApplication() {
     }
 
     private var player: Entity? = null
+    private var playerComponent: PsychoComponent? = null
 
     override fun initSettings(settings: GameSettings) {
         settings.width = 800
@@ -30,6 +41,10 @@ class PsychoGameApp() : GameApplication() {
     }
 
     override fun initGame() {
+        getGameWorld().addEntityFactory(CharactersEntityFactory())
+        player = spawn("Psycho");
+        playerComponent = player!!.getComponent(PsychoComponent::class.java)
+        
         getGameWorld().addEntityFactory(WorldFactory())
 
         val level: Level = getAssetLoader().loadLevel("0.txt", TextLevelLoader(50, 50, ' '))
@@ -64,18 +79,27 @@ class PsychoGameApp() : GameApplication() {
     }
 
     override fun initInput() {
-        FXGL.onKey(KeyCode.D) {
-            player!!.translateX(5.0) // move right 5 pixels
-        }
-        FXGL.onKey(KeyCode.A) {
-            player!!.translateX(-5.0) // move left 5 pixels
-        }
-        FXGL.onKey(KeyCode.W) {
-            player!!.translateY(-5.0) // move up 5 pixels
-        }
-        FXGL.onKey(KeyCode.S) {
-            player!!.translateY(5.0) // move down 5 pixels
-        }
+        getInput().addAction(object : UserAction("Move Up") {
+            override fun onAction() {
+                playerComponent?.moveUp();
+            }
+
+        }, KeyCode.SPACE)
+        getInput().addAction(object : UserAction("Move Down") {
+            override fun onAction() {
+                playerComponent?.moveDown();
+            }
+        }, KeyCode.S)
+        getInput().addAction(object : UserAction("Move Right") {
+            override fun onAction() {
+                playerComponent?.moveRight();
+            }
+        }, KeyCode.D)
+        getInput().addAction(object : UserAction("Move Left") {
+            override fun onAction() {
+                playerComponent?.moveLeft();
+            }
+        }, KeyCode.A)
     }
 
 }
