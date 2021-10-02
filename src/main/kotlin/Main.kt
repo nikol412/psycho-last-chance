@@ -1,3 +1,4 @@
+import CharactersEntityFactory.Companion.BTS_TAG
 import Components.PsychoComponent
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
@@ -16,7 +17,7 @@ class PsychoGameApp : GameApplication() {
         const val WINDOW_WIDTH = 800.0
         const val WINDOW_HEIGHT = 800.0
         const val PLAYER_Y = 500.0
-        const val LEVEL_LENGTH = 3000
+        const val LEVEL_LENGTH = 1000
     }
 
     private var player: Entity? = null
@@ -46,6 +47,21 @@ class PsychoGameApp : GameApplication() {
             viewport.setBounds(0, 0, LEVEL_LENGTH, WINDOW_HEIGHT.toInt())
             viewport.bindToEntity(player!!, 350.0, PLAYER_Y)
         }
+
+        generateBTSFans()
+    }
+
+    private fun generateBTSFans() {
+        val btsCount = random(2, 6)
+        val startXPOsition = 200
+        val endXPosition = LEVEL_LENGTH - 300
+        val xPositions = List(btsCount) { id ->
+            random(startXPOsition, endXPosition).toDouble()
+        }
+        for (i in xPositions.indices) {
+            val btsNps = spawn(BTS_TAG, xPositions[i], PLAYER_Y)
+
+        }
     }
 
     override fun initInput() {
@@ -71,7 +87,6 @@ class PsychoGameApp : GameApplication() {
             }
         }, KeyCode.A)
     }
-
 }
 
 fun main() {
