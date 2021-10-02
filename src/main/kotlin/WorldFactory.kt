@@ -1,13 +1,11 @@
 import PsychoGameApp.Companion.WINDOW_HEIGHT
 import PsychoGameApp.Companion.WINDOW_WIDTH
-import com.almasb.fxgl.dsl.EntityBuilder
 import com.almasb.fxgl.dsl.entityBuilder
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.EntityFactory
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
 import com.almasb.fxgl.entity.components.CollidableComponent
-import com.almasb.fxgl.physics.HitBox
 import com.almasb.fxgl.physics.PhysicsComponent
 import javafx.scene.paint.Color
 import javafx.scene.shape.Rectangle
@@ -18,7 +16,7 @@ class WorldFactory : EntityFactory {
 
     @Spawns("background")
     fun newBackground(data: SpawnData): Entity {
-        return entityBuilder()
+        return entityBuilder(data)
             .type(EntityType.BACKGROUND)
             .view(Rectangle(WINDOW_WIDTH, WINDOW_HEIGHT, Color.color(0.5, 0.4, 0.1)))
             .zIndex(-5)
@@ -32,6 +30,7 @@ class WorldFactory : EntityFactory {
             .type(EntityType.BORDER)
             .with(PhysicsComponent())
             .viewWithBBox(rectangle)
+            .with(PhysicsComponent())
             .zIndex(-1)
             .with(CollidableComponent(true))
             .build()
