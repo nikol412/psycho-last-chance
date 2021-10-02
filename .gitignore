@@ -26,3 +26,6 @@ build/
 # logs #
 *.log
 logs/
+
+# Fxgl files #
+system/
