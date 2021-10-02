@@ -2,6 +2,9 @@ import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
 import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.dsl.FXGL.Companion.getWorldProperties
+import com.almasb.fxgl.dsl.getGameScene
+import com.almasb.fxgl.dsl.getGameWorld
+import com.almasb.fxgl.dsl.spawn
 import com.almasb.fxgl.entity.Entity
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
@@ -10,6 +13,10 @@ import javafx.scene.text.Text
 
 
 class PsychoGameApp() : GameApplication() {
+    companion object {
+        const val WINDOW_WIDTH = 800.0
+        const val WINDOW_HEIGHT = 800.0
+    }
     private var player: Entity? = null
 
     override fun initSettings(settings: GameSettings) {
@@ -20,6 +27,11 @@ class PsychoGameApp() : GameApplication() {
     }
 
     override fun initGame() {
+        getGameWorld().addEntityFactory(BlockFactory())
+        val bg = spawn("background")
+        bg.yProperty().bind(getGameScene().viewport.yProperty())
+
+        getGameScene().viewport.setBounds(0, 0, WINDOW_WIDTH.toInt(), WINDOW_HEIGHT.toInt())
         player = FXGL.entityBuilder()
             .at(300.0, 300.0)
             .view(Rectangle(25.0, 25.0, Color.BLUE))
