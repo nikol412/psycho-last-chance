@@ -29,6 +29,7 @@ class CharactersEntityFactory : EntityFactory {
 
         return FXGL.entityBuilder(data)
             .type(CharactersType.Psycho)
+            .at(100.0, 450.0)
             .with(physics)
             .with(PsychoComponent(physics))
             .viewWithBBox(texture("victim.png", 100.0, 100.0))
