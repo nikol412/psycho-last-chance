@@ -1,0 +1,31 @@
+*.class
+
+# Package Files #
+*.war
+*.ear
+
+# Eclipse #
+.classpath
+.project
+.settings/
+bin/
+
+# IDEA #
+.idea/
+*.iml
+out/
+
+# Maven #
+dependency-reduced-pom.xml
+target/
+
+# Gradle #
+.gradle
+build/
+
+# logs #
+*.log
+logs/
+
+# Fxgl files #
+system/
