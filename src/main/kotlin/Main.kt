@@ -5,8 +5,6 @@ import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
 import com.almasb.fxgl.dsl.*
 import com.almasb.fxgl.entity.Entity
-import com.almasb.fxgl.entity.level.Level
-import com.almasb.fxgl.entity.level.text.TextLevelLoader
 import com.almasb.fxgl.input.UserAction
 import javafx.scene.input.KeyCode
 
@@ -36,8 +34,8 @@ class PsychoGameApp : GameApplication() {
         getGameWorld().addEntityFactory(CharactersEntityFactory())
         getGameWorld().addEntityFactory(WorldFactory())
 
-        val level: Level = getAssetLoader().loadLevel("0.txt", TextLevelLoader(1024, 125, ' '))
-        getGameWorld().setLevel(level)
+//        val level: Level = getAssetLoader().loadLevel("0.txt", TextLevelLoader(1024, 125, ' '))
+//        getGameWorld().setLevel(level)
 
         player = spawn("Psycho")
         playerComponent = player!!.getComponent(PsychoComponent::class.java)
@@ -56,7 +54,7 @@ class PsychoGameApp : GameApplication() {
         val backgroundDoorlight = spawn("background_doorlight", 1024.0, 0.0)
         val backgroundSecond = spawn("background", 2048.0, 0.0)
 
-
+        val floor = spawn("d", 0.0, 760.0)
     }
 
     private fun generateBTSFans() {
