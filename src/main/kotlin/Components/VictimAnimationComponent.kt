@@ -14,15 +14,15 @@ class VictimAnimationComponent(
 
     private val player = getGameWorld().getEntitiesByType(CharactersType.Psycho).first()
 
-    private var idleImage = image("bts_fun.png")
-    private var walkImage = image("bts_fun_walk.png")
+    private var idleImage = image("mobgirl.png")
+    private var walkImage = image("mobgirl.png")
 
     private var animIdle: AnimationChannel =
-        AnimationChannel(idleImage, 11, 22, 33, Duration(500.0), 1, 11)
+        AnimationChannel(idleImage, 8, 3200/8, 300, Duration(500.0), 0, 0)
     private var animWalk: AnimationChannel =
         AnimationChannel(
-            walkImage, 13, 24, 32,
-            Duration(500.0), 1, 13
+            walkImage, 8, 3200/8, 300,
+            Duration(500.0), 0, 7
         )
 
     private var texture: AnimatedTexture = AnimatedTexture(animIdle)

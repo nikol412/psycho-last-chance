@@ -31,7 +31,8 @@ class CharactersEntityFactory : EntityFactory {
             .type(CharactersType.Victim)
             .with(physicsComponent)
             .with(VictimAnimationComponent(physicsComponent))
-            .bbox(BoundingShape.box(22.0, 33.0))
+            .bbox(HitBox(Point2D(150.0, 105.0), BoundingShape.box(100.0, 105.0)))
+            .zIndex(0)
             .collidable()
             .build()
     }
@@ -49,6 +50,7 @@ class CharactersEntityFactory : EntityFactory {
             .with(physics)
             .with(PsychoComponent(physics))
             .with(CollidableComponent(true))
+            .zIndex(1)
             .build()
     }
 
