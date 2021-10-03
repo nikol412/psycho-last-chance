@@ -25,13 +25,9 @@ data class PsychoComponent(
 
     override fun onUpdate(tpf: Double) {
         if (physicsComponent.isMovingX) {
-            if (animatedTexture?.animationChannel != animationMoving) {
-                animatedTexture?.loopAnimationChannel(animationMoving!!)
-            }
+            animatedTexture?.loopNoOverride(animationMoving!!)
         } else {
-            if (animatedTexture?.animationChannel != animationIdle) {
-                animatedTexture?.loopAnimationChannel(animationIdle!!)
-            }
+            animatedTexture?.loopNoOverride(animationIdle!!)
         }
     }
 
@@ -46,22 +42,31 @@ data class PsychoComponent(
     fun moveRight() {
         logger.debug(physicsComponent.velocityX.toString())
         entity.scaleX = 1.0
-        physicsComponent.applyBodyForceToCenter(Vec2(20.0, 0.0))
+        if (physicsComponent.velocityX < 150) {
+            physicsComponent.applyLinearImpulse(Point2D(20.0, 0.0), Point2D(entity.center.x, entity.center.y), true)
+        } else {
+            physicsComponent.velocityX = 100.0
+        }
+
     }
 
     fun moveLeft() {
         logger.debug(physicsComponent.velocityX.toString())
         entity.scaleX = -1.0
-        physicsComponent.applyBodyForceToCenter(Vec2(-20.0, 0.0))
+        if (physicsComponent.velocityX > -150) {
+            physicsComponent.applyLinearImpulse(Point2D(-20.0, 0.0), Point2D(entity.center.x, entity.center.y), true)
+        } else {
+            physicsComponent.velocityX = -150.0
+        }
     }
 
     fun stop() {
-        physicsComponent.applyBodyForceToCenter(
-            Vec2(
+        physicsComponent.applyLinearImpulse(
+            Point2D(
                 if (entity.scaleX > 0)
-                    -physicsComponent.velocityX + 20 else
-                    physicsComponent.velocityX - 20, 0.0
-            )
+                    -physicsComponent.velocityX else
+                    physicsComponent.velocityX, 0.0
+            ), Point2D(entity.center.x, entity.center.y), true
         )
     }
 
