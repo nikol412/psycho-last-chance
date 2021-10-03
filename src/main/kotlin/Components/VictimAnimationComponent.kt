@@ -41,7 +41,8 @@ class VictimAnimationComponent(
 
     override fun onUpdate(tpf: Double) {
         val player = getGameWorld().getEntitiesByType(CharactersType.Psycho).first()
-        if (entity.distance(player) < 300) {
+
+        if (player.distanceBBox(entity) < 200) {
             if (entity.x < player.x) {
                 moveLeft()
             } else {
@@ -60,6 +61,9 @@ class VictimAnimationComponent(
 
 
     fun moveRight() {
+        if (physicsComponent.velocityX.absoluteValue < 100) {
+            physicsComponent.velocityX += 20
+        }
         speed = 100
         entity.scaleX = 1.0
     }
@@ -68,6 +72,7 @@ class VictimAnimationComponent(
         if (physicsComponent.velocityX.absoluteValue < 100) {
             physicsComponent.velocityX -= 20
         }
+
         entity.scaleX = -1.0
     }
 

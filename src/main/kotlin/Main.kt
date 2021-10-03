@@ -4,6 +4,7 @@ import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
 import com.almasb.fxgl.dsl.*
 import com.almasb.fxgl.entity.Entity
+import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.level.Level
 import com.almasb.fxgl.entity.level.text.TextLevelLoader
 import com.almasb.fxgl.input.UserAction
