@@ -1,5 +1,3 @@
-import PsychoGameApp.Companion.WINDOW_HEIGHT
-import PsychoGameApp.Companion.WINDOW_WIDTH
 import com.almasb.fxgl.dsl.entityBuilder
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.EntityFactory
@@ -17,10 +15,10 @@ class WorldFactory : EntityFactory {
 
     @Spawns("background")
     fun newBackground(data: SpawnData): Entity {
-        return entityBuilder()
+        return entityBuilder(data)
             .type(EntityType.BACKGROUND)
-            .view(Rectangle(WINDOW_WIDTH, WINDOW_HEIGHT, Color.color(0.5, 0.4, 0.1)))
-            .zIndex(-5)
+            .view("doorlight.png")
+            .zIndex(-1)
             .build()
     }
 
@@ -43,7 +41,8 @@ class WorldFactory : EntityFactory {
     fun newRoomBlock(data: SpawnData): Entity {
         return entityBuilder(data)
             .type(EntityType.ROOM)
-            .view(Rectangle(50.0, 50.0, Color.color(1.0, 0.0, 1.0)))
+            .zIndex(-2)
+            .viewWithBBox(Rectangle(50.0, 50.0, Color.color(1.0, 0.0, 1.0)))
             .build()
     }
 }

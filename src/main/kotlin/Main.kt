@@ -1,10 +1,10 @@
 import CharactersEntityFactory.Companion.BTS_TAG
 import Components.PsychoComponent
+import com.almasb.fxgl.app.ApplicationMode
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
 import com.almasb.fxgl.dsl.*
 import com.almasb.fxgl.entity.Entity
-import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.level.Level
 import com.almasb.fxgl.entity.level.text.TextLevelLoader
 import com.almasb.fxgl.input.UserAction
@@ -29,6 +29,7 @@ class PsychoGameApp : GameApplication() {
         settings.height = WINDOW_HEIGHT.toInt()
         settings.title = GAME_NAME
         settings.version = GAME_VERSION
+        settings.applicationMode = ApplicationMode.DEBUG
     }
 
     override fun initGame() {
@@ -37,12 +38,9 @@ class PsychoGameApp : GameApplication() {
 
         val level: Level = getAssetLoader().loadLevel("0.txt", TextLevelLoader(50, 50, ' '))
         getGameWorld().setLevel(level)
-
-        player = spawn("Psycho");
+        spawn("background")
+        player = spawn("Psycho")
         playerComponent = player!!.getComponent(PsychoComponent::class.java)
-
-        val bg = spawn("background")
-        bg.yProperty().bind(getGameScene().viewport.yProperty())
 
         with(getGameScene()) {
             viewport.setBounds(0, 0, LEVEL_LENGTH, WINDOW_HEIGHT.toInt())
@@ -67,24 +65,27 @@ class PsychoGameApp : GameApplication() {
 
     override fun initInput() {
         getInput().addAction(object : UserAction("Move Up") {
-            override fun onAction() {
-                playerComponent?.moveUp();
+            override fun onActionBegin() {
+                playerComponent?.moveUp()
             }
 
         }, KeyCode.SPACE)
-        getInput().addAction(object : UserAction("Move Down") {
-            override fun onAction() {
-                playerComponent?.moveDown();
-            }
-        }, KeyCode.S)
         getInput().addAction(object : UserAction("Move Right") {
             override fun onAction() {
-                playerComponent?.moveRight();
+                playerComponent?.moveRight()
+            }
+
+            override fun onActionEnd() {
+                playerComponent?.stop()
             }
         }, KeyCode.D)
         getInput().addAction(object : UserAction("Move Left") {
             override fun onAction() {
-                playerComponent?.moveLeft();
+                playerComponent?.moveLeft()
+            }
+
+            override fun onActionEnd() {
+                playerComponent?.stop()
             }
         }, KeyCode.A)
     }
