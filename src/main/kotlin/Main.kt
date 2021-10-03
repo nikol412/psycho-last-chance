@@ -8,7 +8,6 @@ import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.level.Level
 import com.almasb.fxgl.entity.level.text.TextLevelLoader
 import com.almasb.fxgl.input.UserAction
-import com.almasb.fxgl.physics.CollisionDetectionStrategy
 import javafx.scene.input.KeyCode
 
 
@@ -30,9 +29,7 @@ class PsychoGameApp : GameApplication() {
         settings.height = WINDOW_HEIGHT.toInt()
         settings.title = GAME_NAME
         settings.version = GAME_VERSION
-        settings.applicationMode = ApplicationMode.DEVELOPER
-        settings.isDeveloperMenuEnabled = true
-        settings.collisionDetectionStrategy = CollisionDetectionStrategy.GRID_INDEXING
+        settings.applicationMode = ApplicationMode.DEBUG
     }
 
     override fun initGame() {
@@ -49,9 +46,8 @@ class PsychoGameApp : GameApplication() {
             viewport.setBounds(0, 0, LEVEL_LENGTH, WINDOW_HEIGHT.toInt())
             viewport.bindToEntity(player!!, 350.0, PLAYER_Y)
         }
-        generateBTSFans()
 
-        //play("main.mp3")
+        generateBTSFans()
     }
 
     private fun generateBTSFans() {
@@ -77,7 +73,6 @@ class PsychoGameApp : GameApplication() {
         getInput().addAction(object : UserAction("Move Right") {
             override fun onAction() {
                 playerComponent?.moveRight()
-
             }
 
             override fun onActionEnd() {
