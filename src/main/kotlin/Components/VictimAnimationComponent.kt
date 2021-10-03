@@ -7,13 +7,12 @@ import com.almasb.fxgl.physics.PhysicsComponent
 import com.almasb.fxgl.texture.AnimatedTexture
 import com.almasb.fxgl.texture.AnimationChannel
 import javafx.util.Duration
-import kotlin.math.absoluteValue
 
 class VictimAnimationComponent(
     private var physicsComponent: PhysicsComponent
 ) : Component() {
 
-    private var speed: Int = 0
+    private val player = getGameWorld().getEntitiesByType(CharactersType.Psycho).first()
 
     private var idleImage = image("bts_fun.png")
     private var walkImage = image("bts_fun_walk.png")
@@ -28,10 +27,6 @@ class VictimAnimationComponent(
 
     private var texture: AnimatedTexture = AnimatedTexture(animIdle)
 
-    init {
-
-    }
-
     override fun onAdded() {
         with(entity) {
             viewComponent.addChild(texture)
@@ -40,13 +35,12 @@ class VictimAnimationComponent(
     }
 
     override fun onUpdate(tpf: Double) {
-        val player = getGameWorld().getEntitiesByType(CharactersType.Psycho).first()
 
         if (player.distanceBBox(entity) < 200) {
             if (entity.x < player.x) {
-                moveLeft()
-            } else {
                 moveRight()
+            } else {
+                moveLeft()
             }
         }
 
@@ -61,18 +55,12 @@ class VictimAnimationComponent(
 
 
     fun moveRight() {
-        if (physicsComponent.velocityX.absoluteValue < 100) {
-            physicsComponent.velocityX += 20
-        }
-        speed = 100
+        physicsComponent.velocityX = 80.0
         entity.scaleX = 1.0
     }
 
     fun moveLeft() {
-        if (physicsComponent.velocityX.absoluteValue < 100) {
-            physicsComponent.velocityX -= 20
-        }
-
+        physicsComponent.velocityX = -80.0
         entity.scaleX = -1.0
     }
 
