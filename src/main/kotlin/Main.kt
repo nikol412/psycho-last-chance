@@ -15,10 +15,10 @@ class PsychoGameApp : GameApplication() {
     companion object {
         const val GAME_NAME = "Psycho: Last chance"
         const val GAME_VERSION = "0.1"
-        const val WINDOW_WIDTH = 800.0
-        const val WINDOW_HEIGHT = 800.0
+        const val WINDOW_WIDTH = 1024.0
+        const val WINDOW_HEIGHT = 900.0
         const val PLAYER_Y = 500.0
-        const val LEVEL_LENGTH = 1000
+        const val LEVEL_LENGTH = 2000
     }
 
     private var player: Entity? = null
@@ -36,9 +36,9 @@ class PsychoGameApp : GameApplication() {
         getGameWorld().addEntityFactory(CharactersEntityFactory())
         getGameWorld().addEntityFactory(WorldFactory())
 
-        val level: Level = getAssetLoader().loadLevel("0.txt", TextLevelLoader(50, 50, ' '))
+        val level: Level = getAssetLoader().loadLevel("0.txt", TextLevelLoader(1024, 125, ' '))
         getGameWorld().setLevel(level)
-        spawn("background")
+
         player = spawn("Psycho")
         playerComponent = player!!.getComponent(PsychoComponent::class.java)
 
@@ -47,7 +47,16 @@ class PsychoGameApp : GameApplication() {
             viewport.bindToEntity(player!!, 350.0, PLAYER_Y)
         }
 
+        generateWorld()
         generateBTSFans()
+    }
+
+    private fun generateWorld() {
+        val background = spawn("background", 0.0, 0.0)
+        val backgroundDoorlight = spawn("background_doorlight", 1024.0, 0.0)
+        val backgroundSecond = spawn("background", 2048.0, 0.0)
+
+
     }
 
     private fun generateBTSFans() {
@@ -59,7 +68,6 @@ class PsychoGameApp : GameApplication() {
         }
         for (i in xPositions.indices) {
             val btsNps = spawn(BTS_TAG, xPositions[i], PLAYER_Y)
-
         }
     }
 
