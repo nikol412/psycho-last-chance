@@ -40,7 +40,7 @@ class PsychoGameApp : GameApplication() {
 
         val level: Level = getAssetLoader().loadLevel("0.txt", TextLevelLoader(50, 50, ' '))
         getGameWorld().setLevel(level)
-
+        spawn("background")
         player = spawn("Psycho")
         playerComponent = player!!.getComponent(PsychoComponent::class.java)
 

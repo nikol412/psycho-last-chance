@@ -18,8 +18,8 @@ class WorldFactory : EntityFactory {
     fun newBackground(data: SpawnData): Entity {
         return entityBuilder(data)
             .type(EntityType.BACKGROUND)
-            .view(Rectangle(WINDOW_WIDTH, WINDOW_HEIGHT, Color.color(0.5, 0.4, 0.1)))
-            .zIndex(-5)
+            .view("doorlight.png")
+            .zIndex(-1)
             .build()
     }
 
@@ -31,7 +31,7 @@ class WorldFactory : EntityFactory {
             .with(PhysicsComponent())
             .viewWithBBox(rectangle)
             .with(PhysicsComponent())
-            .zIndex(-1)
+            .zIndex(-2)
             .with(CollidableComponent(true))
             .build()
     }
@@ -40,6 +40,7 @@ class WorldFactory : EntityFactory {
     fun newRoomBlock(data: SpawnData): Entity {
         return entityBuilder(data)
             .type(EntityType.ROOM)
+            .zIndex(-2)
             .viewWithBBox(Rectangle(50.0, 50.0, Color.color(1.0, 0.0, 1.0)))
             .build()
     }

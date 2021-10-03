@@ -35,26 +35,16 @@ class CharactersEntityFactory : EntityFactory {
     fun newPsycho(data: SpawnData): Entity {
         val physics = PhysicsComponent()
         physics.setBodyType(BodyType.DYNAMIC)
-        physics.addGroundSensor(HitBox("GROUND_SENSOR", Point2D(16.0, 38.0), BoundingShape.box(40.0, 40.0)))
+        physics.addGroundSensor(HitBox("GROUND_SENSOR", Point2D(50.0, -50.0), BoundingShape.box(40.0, 40.0)))
 
         physics.setFixtureDef(FixtureDef().friction(0.0f))
-
-        val animationIdle = AnimationChannel(
-            FXGL.image("thingIdle.png"), 9, 166, 180,
-            Duration(2000.0), 0, 8
-        )
-
-        val animationMoving = AnimationChannel(
-            FXGL.image("thingIdle.png"), 9, 150, 150,
-            Duration(500.0), 0, 8
-        )
 
         return FXGL.entityBuilder(data)
             .type(CharactersType.Psycho)
             .at(100.0, 450.0)
             .bbox(HitBox(BoundingShape.box(30.0, 30.0)))
             .with(physics)
-            .with(PsychoComponent(physics, AnimatedTexture(animationIdle), animationIdle, animationMoving))
+            .with(PsychoComponent(physics))
             .with(CollidableComponent(true))
             .buildAndAttach()
     }
