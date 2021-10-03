@@ -40,7 +40,7 @@ class CharactersEntityFactory : EntityFactory {
     fun newPsycho(data: SpawnData): Entity {
         val physics = PhysicsComponent()
         physics.setBodyType(BodyType.DYNAMIC)
-        physics.addGroundSensor(HitBox("GROUND_SENSOR", Point2D(110.0, 300.0), BoundingShape.box(40.0, 40.0)))
+        physics.addGroundSensor(HitBox(Point2D(280.0, 370.0), BoundingShape.circle(4.0)))
         physics.setFixtureDef(FixtureDef().friction(0.0f))
 
         return FXGL.entityBuilder(data)

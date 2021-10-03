@@ -8,6 +8,7 @@ import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.level.Level
 import com.almasb.fxgl.entity.level.text.TextLevelLoader
 import com.almasb.fxgl.input.UserAction
+import com.almasb.fxgl.physics.CollisionDetectionStrategy
 import javafx.scene.input.KeyCode
 
 
@@ -29,15 +30,17 @@ class PsychoGameApp : GameApplication() {
         settings.height = WINDOW_HEIGHT.toInt()
         settings.title = GAME_NAME
         settings.version = GAME_VERSION
-        settings.applicationMode = ApplicationMode.DEBUG
+        settings.applicationMode = ApplicationMode.DEVELOPER
+        settings.isDeveloperMenuEnabled = true
+        settings.collisionDetectionStrategy = CollisionDetectionStrategy.GRID_INDEXING
     }
 
     override fun initGame() {
         getGameWorld().addEntityFactory(CharactersEntityFactory())
         getGameWorld().addEntityFactory(WorldFactory())
 
-        val level: Level = getAssetLoader().loadLevel("0.txt", TextLevelLoader(50, 50, ' '))
-        getGameWorld().setLevel(level)
+        //val level: Level = getAssetLoader().loadLevel("0.txt", TextLevelLoader(50, 50, ' '))
+        //getGameWorld().setLevel(level)
         spawn("background")
         player = spawn("Psycho")
         playerComponent = player!!.getComponent(PsychoComponent::class.java)
@@ -47,7 +50,18 @@ class PsychoGameApp : GameApplication() {
             viewport.bindToEntity(player!!, 350.0, PLAYER_Y)
         }
 
+        play("main.mp3")
+
+        generateWorld()
         generateBTSFans()
+    }
+
+    private fun generateWorld() {
+        val background = spawn("background", 0.0, 0.0)
+        val backgroundDoorlight = spawn("background_doorlight", 1024.0, 0.0)
+        val backgroundSecond = spawn("background", 2048.0, 0.0)
+
+        val floor = spawn("d", 0.0, 760.0)
     }
 
     private fun generateBTSFans() {
@@ -73,6 +87,7 @@ class PsychoGameApp : GameApplication() {
         getInput().addAction(object : UserAction("Move Right") {
             override fun onAction() {
                 playerComponent?.moveRight()
+
             }
 
             override fun onActionEnd() {
