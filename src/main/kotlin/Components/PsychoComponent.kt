@@ -17,20 +17,22 @@ data class PsychoComponent(
     private val logger = Logger.get("PsychoComponent")
 
     private val animationIdle = AnimationChannel(
-        FXGL.image("thingIdle.png"), 9, 166, 180,
-        Duration(2000.0), 0, 8
+        FXGL.image("girl-running.png"), 1, 1692 / 4, 441,
+        Duration(2000.0), 0, 0
     )
 
     private val animationMoving = AnimationChannel(
-        FXGL.image("thingIdle.png"), 9, 150, 150,
-        Duration(500.0), 0, 8
+        FXGL.image("girl-running.png"), 4, 1692 / 4, 441,
+        Duration(500.0), 0, 3
     )
 
     private val animatedTexture = AnimatedTexture(animationIdle)
 
     override fun onAdded() {
-        //entity.transformComponent.scaleOrigin = Point2D(16.0, 21.0)
+        entity.scaleX = 0.5
+        entity.scaleY = 0.5
         entity.viewComponent.addChild(animatedTexture)
+        entity.transformComponent.scaleOrigin = Point2D(200.0, 225.0)
         animatedTexture.loop()
     }
 
@@ -52,7 +54,7 @@ data class PsychoComponent(
 
     fun moveRight() {
         logger.debug(physicsComponent.velocityX.toString())
-        entity.scaleX = 1.0
+        entity.scaleX = 0.5
         if (physicsComponent.velocityX < 200) {
             physicsComponent.velocityX += 50
         } else {
@@ -63,7 +65,7 @@ data class PsychoComponent(
 
     fun moveLeft() {
         logger.debug(physicsComponent.velocityX.toString())
-        entity.scaleX = -1.0
+        entity.scaleX = -0.5
         if (physicsComponent.velocityX > -200) {
             physicsComponent.velocityX -= 50
         } else {
